@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AuraAli — Mods</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1A1D23;
+    --ink-soft: #2A2E37;
+    --page: #E8DCC8;
+    --page-dim: #d8c9ab;
+    --gold: #3FBFC4;
+    --gold-bright: #5FDDE0;
+    --sage: #7A8B6F;
+    --text-light: #F0EEE6;
+    --text-muted: #A9AEB8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6vh 1.5rem 4rem;
+  }
+
+  .shelf-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  .shelf-label a {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  h1 {
+    font-family: 'Spectral', serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    color: var(--text-light);
+    text-align: center;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-top: 0.75rem;
+    text-align: center;
+    max-width: 40ch;
+  }
+
+  .shelf {
+    width: 100%;
+    max-width: 780px;
+    margin-top: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .mod-entry {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--ink-soft);
+    border: 1px solid rgba(240,238,230,0.08);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+
+  .mod-entry::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.25s ease;
+  }
+
+  .mod-entry:hover {
+    transform: translateX(4px);
+    border-color: rgba(201,151,61,0.4);
+    background: #303541;
+  }
+
+  .mod-entry:hover::before {
+    transform: scaleY(1);
+  }
+
+  .mod-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    background: var(--page);
+    flex-shrink: 0;
+    object-fit: cover;
+    image-rendering: pixelated;
+  }
+
+  .mod-icon.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Spectral', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--page-dim);
+  }
+
+  .mod-info { flex: 1; min-width: 0; }
+
+  .mod-name {
+    font-family: 'Spectral', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-light);
+  }
+
+  .mod-tagline {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .mod-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.55rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(122,139,111,0.18);
+    color: var(--sage);
+    border: 1px solid rgba(122,139,111,0.3);
+  }
+
+  .arrow {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: transform 0.18s ease;
+  }
+
+  .mod-entry:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  .mod-entry.upcoming {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  footer {
+    margin-top: 4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  footer a { color: var(--sage); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="shelf-label"><a href="/" style="color:inherit;text-decoration:none;">← AuraAli</a> · development log</div>
+  <h1>The Mod Shelf</h1>
+  <p class="subtitle">Fabric mods built one commit at a time, mostly from a phone.</p>
+
+  <div class="shelf">
+
+    <a href="/mods/simplex_quest/" class="mod-entry">
+      <img src="/mods/assets/quest_book.png" alt="" class="mod-icon">
+      <div class="mod-info">
+        <div class="mod-name">Simplex Quest</div>
+        <div class="mod-tagline">A shared quest book library — one GUI, any mod can add quests to it.</div>
+        <div class="mod-tags">
+          <span class="tag">library</span>
+          <span class="tag">fabric 1.21.4</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <div class="mod-entry upcoming">
+      <div class="mod-icon placeholder">BV</div>
+      <div class="mod-info">
+        <div class="mod-name">Beast Village</div>
+        <div class="mod-tagline">Villager economy &amp; quests. Dashboard coming soon.</div>
+        <div class="mod-tags">
+          <span class="tag">in development</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    built with Claude Code · <a href="mailto:onlyali3000@gmail.com">onlyali3000@gmail.com</a>
+  </footer>
+
+</body>
+</html>

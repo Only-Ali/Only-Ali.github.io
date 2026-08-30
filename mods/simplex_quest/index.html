@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simplex Quest — AuraAli</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1A1D23;
+    --ink-soft: #2A2E37;
+    --ink-softer: #343948;
+    --page: #E8DCC8;
+    --gold: #3FBFC4;
+    --gold-bright: #5FDDE0;
+    --sage: #7A8B6F;
+    --text-light: #F0EEE6;
+    --text-muted: #A9AEB8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  a { color: inherit; }
+
+  .breadcrumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    align-items: center;
+  }
+  .breadcrumb a {
+    color: var(--sage);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .breadcrumb a:hover { color: var(--gold); }
+
+  /* ---- Hero: open book spread ---- */
+  .hero {
+    max-width: 900px;
+    margin: 2.5rem auto 0;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 16px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+
+  .hero-text { flex: 1; min-width: 240px; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+
+  h1 {
+    font-family: 'Spectral', serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin-top: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .lede {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-top: 0.6rem;
+    max-width: 52ch;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .btn-primary:hover {
+    background: var(--gold-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,151,61,0.35);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-light);
+    border: 1px solid rgba(240,238,230,0.25);
+  }
+  .btn-secondary:hover {
+    border-color: var(--sage);
+    color: var(--sage);
+    transform: translateY(-2px);
+  }
+
+  /* ---- Divider: torn page look ---- */
+  .divider {
+    max-width: 900px;
+    margin: 3.5rem auto 0;
+    padding: 0 1.5rem;
+  }
+  .divider hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(240,238,230,0.15), transparent);
+  }
+
+  /* ---- Section: what it does ---- */
+  section {
+    max-width: 900px;
+    margin: 3.5rem auto 0;
+    padding: 0 1.5rem;
+  }
+
+  h2 {
+    font-family: 'Spectral', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .feature-card {
+    background: var(--ink-soft);
+    border: 1px solid rgba(240,238,230,0.08);
+    border-radius: 10px;
+    padding: 1.4rem;
+  }
+
+  .feature-card .icon {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .feature-card h3 {
+    font-family: 'Spectral', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  .feature-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+  }
+
+  /* ---- Code sample ---- */
+  .code-block {
+    background: var(--ink-softer);
+    border: 1px solid rgba(240,238,230,0.1);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    color: var(--page);
+    line-height: 1.7;
+  }
+  .code-block .cm { color: var(--text-muted); }
+  .code-block .kw { color: var(--sage); }
+  .code-block .str { color: var(--gold-bright); }
+
+  /* ---- Status ---- */
+  .status-banner {
+    background: rgba(201,151,61,0.1);
+    border: 1px solid rgba(201,151,61,0.3);
+    border-radius: 10px;
+    padding: 1.1rem 1.4rem;
+    font-size: 0.9rem;
+    color: var(--gold-bright);
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+  .status-banner .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 0.45rem;
+    flex-shrink: 0;
+  }
+  .status-banner span { color: var(--text-muted); }
+
+  footer {
+    max-width: 900px;
+    margin: 4rem auto 0;
+    padding: 2rem 1.5rem 3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(240,238,230,0.08);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  footer a { color: var(--sage); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="breadcrumb"><a href="/mods/">← All mods</a></div>
+
+  <div class="hero">
+    <img src="/mods/assets/quest_book.png" alt="Simplex Quest icon" class="hero-icon">
+    <div class="hero-text">
+      <div class="eyebrow">Fabric · 1.21.4 · Library mod</div>
+      <h1>Simplex Quest</h1>
+      <p class="lede">A shared quest book, built once so every mod can use it. Register quests from your own mod and they show up in one common Quest Book GUI — no need to build your own screen from scratch.</p>
+      <div class="cta-row">
+        <a href="https://github.com/Aura-Ali/Aura-Ali.github.io/releases/latest/download/simplex_quest.jar" class="btn btn-primary">↓ Download latest</a>
+        <a href="/mods/simplex_quest/issues/" class="btn btn-secondary">Report an issue</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><hr></div>
+
+  <section>
+    <div class="status-banner">
+      <div class="dot"></div>
+      <div><strong style="color:var(--gold-bright)">Early development.</strong> <span>Quests display, but rewards aren't granted automatically yet, and there's no completion tracking. See the roadmap below.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What it does</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">01 · REGISTER</div>
+        <h3>One API, any mod</h3>
+        <p>Call <code>SimplexQuestAPI.registerQuest(...)</code> from your own mod's init — no need to touch Simplex Quest's code at all.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">02 · DISPLAY</div>
+        <h3>Shared Quest Book GUI</h3>
+        <p>A right-clickable Quest Book item opens a chest-style screen showing every quest registered by every mod that depends on it.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">03 · RECIPE-READY</div>
+        <h3>Craftable, your way</h3>
+        <p>No default recipe — any dependent mod can add its own crafting recipe for the shared Quest Book item.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Add it to your mod</h2>
+    <div class="code-block">
+<span class="cm">// build.gradle</span><br>
+<span class="kw">modImplementation</span> files(<span class="str">"libs/simplex_quest-0.1.0.jar"</span>)<br>
+<br>
+<span class="cm">// YourMod.java</span><br>
+SimplexQuestAPI.registerQuest(<span class="kw">new</span> Quest(<br>
+&nbsp;&nbsp;<span class="str">"gather_wood"</span>, <span class="str">"Gather Wood"</span>,<br>
+&nbsp;&nbsp;<span class="str">"Bring 20 Oak Logs to the Woodcutter."</span>,<br>
+&nbsp;&nbsp;<span class="str">"Reward: 5 Beast Coin"</span><br>
+));
+    </div>
+  </section>
+
+  <footer>
+    <span>Simplex Quest v0.1.0 · MIT license</span>
+    <span><a href="mailto:onlyali3000@gmail.com">onlyali3000@gmail.com</a></span>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report an Issue — Simplex Quest</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1A1D23;
+    --ink-soft: #2A2E37;
+    --page: #E8DCC8;
+    --gold: #3FBFC4;
+    --gold-bright: #5FDDE0;
+    --sage: #7A8B6F;
+    --text-light: #F0EEE6;
+    --text-muted: #A9AEB8;
+    --rust: #b5654a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .breadcrumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding: 1.5rem 1.5rem 0;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+  }
+  .breadcrumb a {
+    color: var(--sage);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb span { opacity: 0.5; margin: 0 0.3rem; }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+
+  h1 {
+    font-family: 'Spectral', serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    margin-top: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .lede {
+    color: var(--text-muted);
+    margin-top: 0.8rem;
+    max-width: 55ch;
+  }
+
+  /* ---- "torn page" report card ---- */
+  .report-card {
+    margin-top: 2.5rem;
+    background: var(--ink-soft);
+    border: 1px solid rgba(240,238,230,0.08);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+  }
+
+  label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--sage);
+    margin-bottom: 0.4rem;
+    margin-top: 1.3rem;
+  }
+  label:first-of-type { margin-top: 0; }
+
+  select, input, textarea {
+    width: 100%;
+    background: var(--ink);
+    border: 1px solid rgba(240,238,230,0.15);
+    border-radius: 7px;
+    padding: 0.7rem 0.9rem;
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+  }
+
+  select:focus, input:focus, textarea:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+    border-color: transparent;
+  }
+
+  textarea {
+    min-height: 140px;
+    resize: vertical;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+  }
+
+  .hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.35rem;
+  }
+
+  .submit-row {
+    margin-top: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-send {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--gold);
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-send:hover {
+    background: var(--gold-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,151,61,0.35);
+  }
+
+  .submit-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .info-block {
+    margin-top: 2.5rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid rgba(240,238,230,0.08);
+  }
+
+  .info-block h2 {
+    font-family: 'Spectral', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+  }
+
+  .info-block ul {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    padding-left: 1.2rem;
+  }
+  .info-block li { margin-bottom: 0.4rem; }
+  .info-block code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--ink-soft);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--page);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="/mods/">All mods</a><span>/</span><a href="/mods/simplex_quest/">Simplex Quest</a><span>/</span>Issues
+  </div>
+
+  <main>
+    <div class="eyebrow">Bug report &amp; suggestions</div>
+    <h1>Something wrong, or an idea?</h1>
+    <p class="lede">Fill this in and it'll open your email app with everything pre-filled, ready to send. No account needed.</p>
+
+    <div class="report-card">
+      <form id="issueForm">
+        <label for="type">What kind of report is this?</label>
+        <select id="type">
+          <option value="Bug">🐞 Bug — something broke or crashed</option>
+          <option value="Suggestion">💡 Suggestion — an idea or feature request</option>
+          <option value="Question">❓ Question — something's unclear</option>
+        </select>
+
+        <label for="summary">Short summary</label>
+        <input type="text" id="summary" placeholder="e.g. Quest Book crashes on right-click">
+
+        <label for="details">What happened? (or what you'd like to see)</label>
+        <textarea id="details" placeholder="Steps to reproduce, what you expected, what actually happened. Paste crash logs here if you have one."></textarea>
+        <p class="hint">Tip: crash reports are usually in <code>.minecraft/crash-reports/</code> — paste the whole thing, it helps a lot.</p>
+
+        <div class="submit-row">
+          <button type="button" class="btn-send" onclick="sendReport()">Send report →</button>
+          <span class="submit-note">Opens your email app · sent to onlyali3000@gmail.com</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="info-block">
+      <h2>Before you send</h2>
+      <ul>
+        <li>Check you're running <strong>Minecraft 1.21.4</strong> with <strong>Fabric Loader</strong> and <strong>Fabric API</strong> installed — most crashes trace back to a version mismatch.</li>
+        <li>Mention which other mods you have installed alongside Simplex Quest, especially any mod that depends on it.</li>
+        <li>Include your Simplex Quest version — check <code>fabric.mod.json</code> or the mods screen in-game.</li>
+      </ul>
+    </div>
+  </main>
+
+  <script>
+    function sendReport() {
+      const type = document.getElementById('type').value;
+      const summary = document.getElementById('summary').value || '(no summary provided)';
+      const details = document.getElementById('details').value || '(no details provided)';
+
+      const subject = `[Simplex Quest] ${type}: ${summary}`;
+      const body = `Type: ${type}\nSummary: ${summary}\n\nDetails:\n${details}`;
+
+      const mailto = `mailto:onlyali3000@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+    }
+  </script>
+
+</body>
+</html>
